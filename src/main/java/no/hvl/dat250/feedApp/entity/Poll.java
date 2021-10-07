@@ -28,18 +28,36 @@ public class Poll {
     @ManyToOne
     private Account account;
 
+    public Poll(){}
 
+    public Poll(String pollDesc, String pollName, String startTime, String endTime,
+                String timeLimit, Boolean privatePoll, Boolean closed, int yesOption, int noOption) {
+        this.pollDesc = pollDesc;
+        this.pollName = pollName;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.timeLimit = timeLimit;
+        this.privatePoll = privatePoll;
+        this.closed = closed;
+        this.yesOption = yesOption;
+        this.noOption = noOption;
 
+    }
 
-    public Poll() {
-        pollDesc="";
-        pollName ="";
-        startTime="";
-        endTime="";
-        timeLimit="";
-        privatePoll=false;
-        closed=false;
-        yesOption=0;
-        noOption=0;
+    @Override
+    public String toString() {
+        return "Poll{" +
+                "id=" + id +
+                ", pollDesc='" + pollDesc + '\'' +
+                ", pollName='" + pollName + '\'' +
+                ", startTime='" + startTime + '\'' +
+                ", endTime='" + endTime + '\'' +
+                ", timeLimit='" + timeLimit + '\'' +
+                ", privatePoll=" + privatePoll +
+                ", closed=" + closed +
+                ", yesOption=" + yesOption +
+                ", noOption=" + noOption +
+                ", account=" + account +
+                '}';
     }
 }

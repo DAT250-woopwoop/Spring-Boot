@@ -4,6 +4,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -15,7 +17,7 @@ public class Account {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String username;
-    private transient String password;
+    private String password;
     private String e_mail;
     private String f_name;
     private String l_name;
@@ -30,12 +32,12 @@ public class Account {
         this.l_name = l_name;
     }
 
-    /*@OneToMany(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
     private List<Poll> polls = new ArrayList<>();
 
     public void addPolls(Poll poll) {
         polls.add(poll);
-    }*/
+    }
 
     public String toString(){
         return "User{ id = " + this.id + ", name = " + this.f_name +" "+ this.l_name + ", e_mail = " +
