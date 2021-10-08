@@ -16,7 +16,7 @@ public class PollController {
     }
 
     @GetMapping("/polls")
-    public List<Poll> all() {
+    public List<Poll> findAll() {
         return repository.findAll();
     }
 
