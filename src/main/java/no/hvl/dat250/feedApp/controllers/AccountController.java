@@ -1,57 +1,51 @@
 package no.hvl.dat250.feedApp.controllers;
 
-import no.hvl.dat250.feedApp.entity.Account;
-import no.hvl.dat250.feedApp.reposetory.AccountRepository;
-import org.apache.derby.diag.ErrorMessages;
+import no.hvl.dat250.feedApp.entity.*;
+import no.hvl.dat250.feedApp.reposetory.*;
+import no.hvl.dat250.feedApp.service.*;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 public class AccountController {
-    private final AccountRepository repository;
+    private final AccountService accountService;
+    private final PollRepository pollRepository;
 
-    AccountController(AccountRepository repository){
-        this.repository = repository;
+    AccountController(PollRepository pollRepository, AccountService accountService){
+        this.accountService = accountService;
+        this.pollRepository = pollRepository;
     }
 
     @GetMapping("/users")
     public List<Account> all(){
-        return repository.findAll();
+        return accountService.findAll();
     }
 
-    @GetMapping("users/{id}")
-    public Account one(@PathVariable Long id) {
-        Optional<Account> account = repository.findById(id);
-        if (account.isPresent()){
-            return account.get();
-        }
-        return null;
+    @GetMapping("/users/{id}")
+    public Account findAccountById(@PathVariable Long id) {
+        return accountService.findAccountById(id);
     }
 
     @PostMapping("/users")
     public Account newAccount(@RequestBody Account account) {
-        return repository.save(account);
+        return accountService.makeNewAccount(account);
     }
 
     @PutMapping("users/{id}")
     public Account updateAccount(@RequestBody Account newAccount, @PathVariable Long id) {
-        return repository.findById(id).map(account -> {
-            account.setE_mail(newAccount.getE_mail());
-            account.setF_name(newAccount.getF_name());
-            account.setL_name(newAccount.getL_name());
-            account.setUsername(newAccount.getUsername());
-            account.setPassword(newAccount.getPassword());
-            return repository.save(account);
-        }).orElseGet(() -> {
-            newAccount.setId(id);
-            return repository.save(newAccount);
-        });
+        return accountService.updateAccount(newAccount, id);
     }
 
     @DeleteMapping("/users/{id}")
     public void deleteAccount(@PathVariable Long id) {
-        repository.deleteById(id);
+        accountService.deleteAccount(id);
     }
+
+    @PostMapping("/users/{userId}/newPoll")
+    public Poll makeNewPoll(@PathVariable Long userId, @RequestBody Poll poll) {
+        return pollRepository.save(poll); // TODO: 08/10/2021   need to stop recursive column
+        // accountService.makeNewPoll(poll, userId);
+    }
+
 }
