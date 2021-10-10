@@ -12,22 +12,36 @@ import java.util.*;
 public class PollServiceImpl implements PollService {
 
     @Autowired
-    AccountRepository accountRepository;
-
-    @Autowired
     PollRepository pollRepository;
-
-    @Override
-    public Poll makeNewPoll(Long accountId, Poll poll) {
-        Account account = accountRepository.getById(accountId);
-
-        poll.setAccount(account);
-
-        return pollRepository.save(poll);
-    }
 
     @Override
     public List<Poll> findAll() {
         return pollRepository.findAll();
+    }
+
+    @Override
+    public Poll find(Long id) {
+        Optional<Poll> poll = pollRepository.findById(id);
+
+        return poll.orElse(null);
+
+    }
+
+    @Override
+    public Poll update(Long id, Poll updatedPoll) {
+        Optional<Poll> poll = pollRepository.findById(id);
+        if (poll.isEmpty()) return null;
+        Poll storedPoll = poll.get();
+
+        storedPoll.update(updatedPoll);
+        return pollRepository.save(storedPoll);
+    }
+
+    @Override
+    public void delete(Long id) {
+        Optional<Poll> poll = pollRepository.findById(id);
+        if (poll.isEmpty()) return;
+
+        pollRepository.delete(poll.get());
     }
 }

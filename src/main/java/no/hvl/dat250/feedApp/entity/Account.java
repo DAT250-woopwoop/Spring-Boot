@@ -1,6 +1,5 @@
 package no.hvl.dat250.feedApp.entity;
 
-import com.fasterxml.jackson.annotation.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -34,12 +33,14 @@ public class Account {
         this.l_name = l_name;
     }
 
-    @OneToMany(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "account", cascade = CascadeType.MERGE)
     private List<Poll> polls = new ArrayList<>();
-
+/*
     public void addPolls(Poll poll) {
         polls.add(poll);
     }
+
+ */
 
     public String toString(){
         return "User{ id = " + this.id + ", name = " + this.f_name +" "+ this.l_name + ", e_mail = " +

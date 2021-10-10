@@ -6,7 +6,11 @@ import java.util.*;
 
 public interface PollService {
 
-    Poll makeNewPoll(Long accountId, Poll poll);
-
     List<Poll> findAll();
+
+    Poll find(Long id);
+
+    Poll update(Long id, Poll updatedPoll);
+
+    void delete(Long id);
 }

@@ -59,7 +59,7 @@ public class AccountServiceImpl implements AccountService {
 
         poll.setAccount(acc);
 
-        acc.getPolls().add(poll);
+        //acc.getPolls().add(poll);
         pollRepository.saveAndFlush(poll);
         accountRepository.save(acc);
 

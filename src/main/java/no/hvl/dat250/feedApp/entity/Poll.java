@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.function.*;
 
 @Entity
 @Getter
@@ -26,6 +27,7 @@ public class Poll {
     private int noOption;
 
     @ManyToOne
+    @JoinColumn(name = "account_id")
     private Account account;
 
     public Poll(){}
@@ -42,6 +44,25 @@ public class Poll {
         this.yesOption = yesOption;
         this.noOption = noOption;
 
+    }
+
+    public void update(Poll updatedPoll) {
+        setIfNotNull(this::setAccount, updatedPoll.getAccount());
+        setIfNotNull(this::setPollDesc, updatedPoll.getPollDesc());
+        setIfNotNull(this::setPollName, updatedPoll.getPollName());
+        setIfNotNull(this::setStartTime, updatedPoll.getStartTime());
+        setIfNotNull(this::setEndTime, updatedPoll.getEndTime());
+        setIfNotNull(this::setTimeLimit, updatedPoll.getEndTime());
+        setIfNotNull(this::setPrivatePoll, updatedPoll.isPrivatePoll());
+        setIfNotNull(this::setClosed, updatedPoll.isClosed());
+        setIfNotNull(this::setYesOption, updatedPoll.getYesOption());
+        setIfNotNull(this::setNoOption, updatedPoll.getNoOption());
+    }
+
+    private <T> void setIfNotNull(final Consumer<T> setter, final T value) {
+        if (value != null) {
+            setter.accept(value);
+        }
     }
 
     @Override

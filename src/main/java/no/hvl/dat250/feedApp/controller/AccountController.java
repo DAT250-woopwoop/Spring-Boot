@@ -1,14 +1,19 @@
-package no.hvl.dat250.feedApp.controllers;
+package no.hvl.dat250.feedApp.controller;
 
 import no.hvl.dat250.feedApp.entity.*;
 import no.hvl.dat250.feedApp.reposetory.*;
 import no.hvl.dat250.feedApp.service.*;
+import no.hvl.dat250.feedApp.service.dao.*;
+import org.springframework.beans.factory.annotation.*;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.*;
 import java.util.List;
 
 @RestController
 public class AccountController {
+
+
     private final AccountService accountService;
     private final PollRepository pollRepository;
 
@@ -18,7 +23,7 @@ public class AccountController {
     }
 
     @GetMapping("/users")
-    public List<Account> all(){
+    public List<Account> all() {
         return accountService.findAll();
     }
 
@@ -30,6 +35,7 @@ public class AccountController {
     @PostMapping("/users")
     public Account newAccount(@RequestBody Account account) {
         return accountService.makeNewAccount(account);
+
     }
 
     @PutMapping("users/{id}")
@@ -44,8 +50,9 @@ public class AccountController {
 
     @PostMapping("/users/{userId}/newPoll")
     public Poll makeNewPoll(@PathVariable Long userId, @RequestBody Poll poll) {
-        return pollRepository.save(poll); // TODO: 08/10/2021   need to stop recursive column
-        // accountService.makeNewPoll(poll, userId);
+        //return pollRepository.save(poll); // TODO: 08/10/2021   need to stop recursive column
+         return accountService.makeNewPoll(poll, userId);
     }
+
 
 }
