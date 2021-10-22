@@ -3,13 +3,11 @@ package no.hvl.dat250.feedApp.controller;
 import no.hvl.dat250.feedApp.entity.*;
 import no.hvl.dat250.feedApp.reposetory.*;
 import no.hvl.dat250.feedApp.service.*;
-import no.hvl.dat250.feedApp.service.dao.*;
-import org.springframework.beans.factory.annotation.*;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.*;
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 public class AccountController {
 

@@ -19,7 +19,7 @@ public class LoadDatabase {
     CommandLineRunner initDatabase(AccountRepository accountRepository, PollRepository pollRepository) {
         return args -> {
             log.info("Preloading " + accountRepository.save(new Account("OlaNordmann", "Password", "ola@mail.com", "Ola", "Nordmann")));
-            log.info("Preloading " + pollRepository.save(new Poll("Second poll", "WDYM", "10.10.21", "11.11.21","1", false, false, 0,0 )));
+            log.info("Preloading " + pollRepository.save(new Poll("Second poll", "WDYM", "10.10.21", "11.11.21","1", false, false, 11,3 )));
         };
     }
 

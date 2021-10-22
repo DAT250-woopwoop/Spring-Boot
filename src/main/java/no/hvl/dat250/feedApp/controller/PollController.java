@@ -1,13 +1,12 @@
 package no.hvl.dat250.feedApp.controller;
 
 import no.hvl.dat250.feedApp.entity.Poll;
-import no.hvl.dat250.feedApp.reposetory.PollRepository;
 import no.hvl.dat250.feedApp.service.*;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 public class PollController {
     private final PollService pollService;
