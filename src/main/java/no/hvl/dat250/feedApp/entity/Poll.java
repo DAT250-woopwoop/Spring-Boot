@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.sql.*;
 import java.util.function.*;
 
 @Entity
@@ -18,9 +19,9 @@ public class Poll {
 
     private String pollDesc;
     private String pollName;
-    private String startTime; //TODO: Change to given best time class
-    private String endTime;
-    private String timeLimit;
+    private Date startTime;
+    private Date endTime;
+    private Date timeLimit;
     private boolean privatePoll;
     private boolean closed;
     private int yesOption;
@@ -32,8 +33,8 @@ public class Poll {
 
     public Poll(){}
 
-    public Poll(String pollDesc, String pollName, String startTime, String endTime,
-                String timeLimit, Boolean privatePoll, Boolean closed, int yesOption, int noOption) {
+    public Poll(String pollDesc, String pollName, Date startTime, Date endTime,
+                Date timeLimit, Boolean privatePoll, Boolean closed, int yesOption, int noOption) {
         this.pollDesc = pollDesc;
         this.pollName = pollName;
         this.startTime = startTime;
