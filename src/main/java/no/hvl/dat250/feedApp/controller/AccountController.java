@@ -18,7 +18,7 @@ public class AccountController {
 
     private final AccountService accountService;
     private final PollRepository pollRepository;
-    private final Mapper mapper = new Mapper();
+    private final Mapper mapper = new Mapper(); // TODO: 25/10/2021 Should be a bean(?)
 
     AccountController(PollRepository pollRepository, AccountService accountService){
         this.accountService = accountService;
@@ -56,9 +56,9 @@ public class AccountController {
     }
 
     @PostMapping("/users/{userId}/newPoll")
-    public Poll makeNewPoll(@PathVariable Long userId, @RequestBody Poll poll) {
-        //return pollRepository.save(poll); // TODO: 08/10/2021   need to stop recursive column
-         return accountService.makeNewPoll(poll, userId);
+    public PollDTO makeNewPoll(@PathVariable Long userId, @RequestBody PollCreationDTO pollCreationDTO) {
+        Poll poll = mapper.toDTO(pollCreationDTO);
+        return mapper.toDTO(accountService.makeNewPoll(poll, userId));
     }
 
 

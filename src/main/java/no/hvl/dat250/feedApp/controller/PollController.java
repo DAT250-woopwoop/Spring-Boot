@@ -1,33 +1,40 @@
 package no.hvl.dat250.feedApp.controller;
 
+import no.hvl.dat250.feedApp.dto.*;
 import no.hvl.dat250.feedApp.entity.Poll;
 import no.hvl.dat250.feedApp.service.*;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import static java.util.stream.Collectors.toList;
+
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
 public class PollController {
     private final PollService pollService;
+    private final Mapper mapper = new Mapper(); // TODO: 25/10/2021 Should be bean(?)
 
     public PollController(PollService pollService) {
         this.pollService = pollService;
     }
 
     @GetMapping("/polls")
-    public List<Poll> findAll() {
-        return pollService.findAll();
+    public List<PollDTO> findAll() {
+        return pollService.findAll()
+                .stream()
+                .map(mapper::toDTO)
+                .collect(toList());
     }
 
     @GetMapping("/polls/{id}")
-    public Poll findPollById(@PathVariable Long id){
-        return pollService.find(id);
+    public PollDTO findPollById(@PathVariable Long id){
+        return mapper.toDTO(pollService.find(id));
     }
 
     @PutMapping("polls/{id}")
-    public Poll updatePoll(@RequestBody Poll update, @PathVariable Long id) {
-        return pollService.update(id, update);
+    public PollDTO updatePoll(@RequestBody Poll update, @PathVariable Long id) {
+        return mapper.toDTO(pollService.update(id, update));
     }
 
     @DeleteMapping("/polls/{id}")
