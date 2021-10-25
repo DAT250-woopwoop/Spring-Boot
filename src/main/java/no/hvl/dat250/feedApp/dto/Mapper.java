@@ -25,8 +25,8 @@ public class Mapper {
     public PollDTO toDTO(Poll poll) {
         String pollDesc = poll.getPollDesc();
         String pollName = poll.getPollName();
-        Date startTime = poll.getStartTime();
-        Date endTime = poll.getEndTime();
+        Timestamp startTime = poll.getStartTime();
+        Timestamp endTime = poll.getEndTime();
         boolean privatePoll = poll.isPrivatePoll();
         boolean closed = poll.isClosed();
         int yesOption = poll.getYesOption();
@@ -38,8 +38,8 @@ public class Mapper {
     public Poll toDTO(PollCreationDTO poll) {
         String pollDesc = poll.getPollDesc();
         String pollName = poll.getPollName();
-        Date startTime = Date.valueOf(poll.getStartTime());
-        Date endTime = Date.valueOf(poll.getEndTime());
+        Timestamp startTime = Timestamp.valueOf(poll.getStartTime());
+        Timestamp endTime = Timestamp.valueOf(poll.getEndTime());
         boolean privatePoll = poll.isPrivatePoll();
         boolean closed = poll.isClosed();
         int yesOption = poll.getYesOption();

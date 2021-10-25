@@ -10,8 +10,8 @@ import java.sql.*;
 public class PollDTO {
     private String pollDesc;
     private String pollName;
-    private Date startTime;
-    private Date endTime;
+    private Timestamp startTime;
+    private Timestamp endTime;
     private boolean privatePoll;
     private boolean closed;
     private int yesOption;
@@ -19,7 +19,7 @@ public class PollDTO {
 
     private Long accountId;
 
-    public PollDTO(String pollDesc, String pollName, Date startTime, Date endTime, boolean privatePoll, boolean closed, int yesOption, int noOption, Long accountId) {
+    public PollDTO(String pollDesc, String pollName, Timestamp startTime, Timestamp endTime, boolean privatePoll, boolean closed, int yesOption, int noOption, Long accountId) {
         this.pollDesc = pollDesc;
         this.pollName = pollName;
         this.startTime = startTime;

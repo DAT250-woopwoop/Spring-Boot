@@ -19,8 +19,8 @@ public class Poll {
 
     private String pollDesc;
     private String pollName;
-    private Date startTime;
-    private Date endTime;
+    private Timestamp startTime;
+    private Timestamp endTime;
     private boolean privatePoll;
     private boolean closed;
     private int yesOption;
@@ -32,7 +32,7 @@ public class Poll {
 
     public Poll(){}
 
-    public Poll(String pollDesc, String pollName, Date startTime, Date endTime,
+    public Poll(String pollDesc, String pollName, Timestamp startTime, Timestamp endTime,
                 Boolean privatePoll, Boolean closed, int yesOption, int noOption) {
         this.pollDesc = pollDesc;
         this.pollName = pollName;
