@@ -1,11 +1,15 @@
 package no.hvl.dat250.feedApp.controller;
 
+import no.hvl.dat250.feedApp.dto.*;
 import no.hvl.dat250.feedApp.entity.*;
 import no.hvl.dat250.feedApp.reposetory.*;
 import no.hvl.dat250.feedApp.service.*;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.*;
+
+import static java.util.stream.Collectors.toList;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
@@ -14,6 +18,7 @@ public class AccountController {
 
     private final AccountService accountService;
     private final PollRepository pollRepository;
+    private final Mapper mapper = new Mapper();
 
     AccountController(PollRepository pollRepository, AccountService accountService){
         this.accountService = accountService;
@@ -21,24 +26,28 @@ public class AccountController {
     }
 
     @GetMapping("/users")
-    public List<Account> all() {
-        return accountService.findAll();
+    public List<AccountDTO> all() {
+        return accountService
+                .findAll()
+                .stream()
+                .map(mapper::toDTO)
+                .collect(toList());
     }
 
     @GetMapping("/users/{id}")
-    public Account findAccountById(@PathVariable Long id) {
-        return accountService.findAccountById(id);
+    public AccountDTO findAccountById(@PathVariable Long id) {
+        return mapper.toDTO(accountService.findAccountById(id));
     }
 
     @PostMapping("/users")
-    public Account newAccount(@RequestBody Account account) {
-        return accountService.makeNewAccount(account);
+    public AccountDTO newAccount(@RequestBody Account account) {
+        return mapper.toDTO(accountService.makeNewAccount(account));
 
     }
 
     @PutMapping("users/{id}")
-    public Account updateAccount(@RequestBody Account newAccount, @PathVariable Long id) {
-        return accountService.updateAccount(newAccount, id);
+    public AccountDTO updateAccount(@RequestBody Account newAccount, @PathVariable Long id) {
+        return mapper.toDTO(accountService.updateAccount(newAccount, id));
     }
 
     @DeleteMapping("/users/{id}")
