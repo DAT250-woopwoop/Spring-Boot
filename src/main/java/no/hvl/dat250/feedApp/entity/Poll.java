@@ -21,7 +21,6 @@ public class Poll {
     private String pollName;
     private Date startTime;
     private Date endTime;
-    private Date timeLimit;
     private boolean privatePoll;
     private boolean closed;
     private int yesOption;
@@ -34,12 +33,11 @@ public class Poll {
     public Poll(){}
 
     public Poll(String pollDesc, String pollName, Date startTime, Date endTime,
-                Date timeLimit, Boolean privatePoll, Boolean closed, int yesOption, int noOption) {
+                Boolean privatePoll, Boolean closed, int yesOption, int noOption) {
         this.pollDesc = pollDesc;
         this.pollName = pollName;
         this.startTime = startTime;
         this.endTime = endTime;
-        this.timeLimit = timeLimit;
         this.privatePoll = privatePoll;
         this.closed = closed;
         this.yesOption = yesOption;
@@ -53,7 +51,6 @@ public class Poll {
         setIfNotNull(this::setPollName, updatedPoll.getPollName());
         setIfNotNull(this::setStartTime, updatedPoll.getStartTime());
         setIfNotNull(this::setEndTime, updatedPoll.getEndTime());
-        setIfNotNull(this::setTimeLimit, updatedPoll.getEndTime());
         setIfNotNull(this::setPrivatePoll, updatedPoll.isPrivatePoll());
         setIfNotNull(this::setClosed, updatedPoll.isClosed());
         setIfNotNull(this::setYesOption, updatedPoll.getYesOption());
@@ -74,7 +71,6 @@ public class Poll {
                 ", pollName='" + pollName + '\'' +
                 ", startTime='" + startTime + '\'' +
                 ", endTime='" + endTime + '\'' +
-                ", timeLimit='" + timeLimit + '\'' +
                 ", privatePoll=" + privatePoll +
                 ", closed=" + closed +
                 ", yesOption=" + yesOption +

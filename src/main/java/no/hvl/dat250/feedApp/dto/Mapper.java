@@ -2,7 +2,9 @@ package no.hvl.dat250.feedApp.dto;
 
 import no.hvl.dat250.feedApp.entity.*;
 
+import java.sql.*;
 import java.sql.Date;
+import java.time.*;
 import java.util.*;
 import java.util.stream.*;
 
@@ -25,27 +27,25 @@ public class Mapper {
         String pollName = poll.getPollName();
         Date startTime = poll.getStartTime();
         Date endTime = poll.getEndTime();
-        Date timeLimit = poll.getTimeLimit();
         boolean privatePoll = poll.isPrivatePoll();
         boolean closed = poll.isClosed();
         int yesOption = poll.getYesOption();
         int noOption = poll.getNoOption();
         long accountId = poll.getAccount().getId();
 
-        return new PollDTO(pollDesc, pollName, startTime, endTime, timeLimit, privatePoll, closed, yesOption, noOption, accountId);
+        return new PollDTO(pollDesc, pollName, startTime, endTime, privatePoll, closed, yesOption, noOption, accountId);
     }
     public Poll toDTO(PollCreationDTO poll) {
         String pollDesc = poll.getPollDesc();
         String pollName = poll.getPollName();
         Date startTime = Date.valueOf(poll.getStartTime());
         Date endTime = Date.valueOf(poll.getEndTime());
-        Date timeLimit = Date.valueOf(poll.getTimeLimit());
         boolean privatePoll = poll.isPrivatePoll();
         boolean closed = poll.isClosed();
         int yesOption = poll.getYesOption();
         int noOption = poll.getNoOption();
 
-        return new Poll(pollDesc, pollName, startTime, endTime, timeLimit, privatePoll, closed, yesOption, noOption);
+        return new Poll(pollDesc, pollName, startTime, endTime, privatePoll, closed, yesOption, noOption);
 
     }
 }

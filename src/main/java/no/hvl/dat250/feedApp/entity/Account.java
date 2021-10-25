@@ -25,22 +25,17 @@ public class Account {
 
     public Account() {}
 
-    public Account(String username, String password, String e_mail, String f_name, String l_name) {
+    public Account(String username, String password, String e_mail, String f_name, String l_name, Poll poll) {
         this.username = username;
         this.password = password;
         this.e_mail = e_mail;
         this.f_name = f_name;
         this.l_name = l_name;
+        polls.add(poll);
     }
 
     @OneToMany(mappedBy = "account", cascade = CascadeType.MERGE)
     private List<Poll> polls = new ArrayList<>();
-/*
-    public void addPolls(Poll poll) {
-        polls.add(poll);
-    }
-
- */
 
     public String toString(){
         return "User{ id = " + this.id + ", name = " + this.f_name +" "+ this.l_name + ", e_mail = " +
