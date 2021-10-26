@@ -11,6 +11,7 @@ import java.util.stream.*;
 public class Mapper {
 
     public AccountDTO toDTO(Account account) {
+        long id = account.getId();
         String username = account.getUsername();
         String f_name = account.getF_name();
         String l_name = account.getL_name();
@@ -20,9 +21,11 @@ public class Mapper {
                 .stream()
                 .map(Poll::getId)
                 .collect(Collectors.toList());
-        return new AccountDTO(username, e_mail, f_name, l_name, polls);
+
+        return new AccountDTO(id, username, e_mail, f_name, l_name, polls);
     }
     public PollDTO toDTO(Poll poll) {
+        long id = poll.getId();
         String pollDesc = poll.getPollDesc();
         String pollName = poll.getPollName();
         Timestamp startTime = poll.getStartTime();
@@ -33,7 +36,7 @@ public class Mapper {
         int noOption = poll.getNoOption();
         long accountId = poll.getAccount().getId();
 
-        return new PollDTO(pollDesc, pollName, startTime, endTime, privatePoll, closed, yesOption, noOption, accountId);
+        return new PollDTO(id,  pollDesc, pollName, startTime, endTime, privatePoll, closed, yesOption, noOption, accountId);
     }
     public Poll toDTO(PollCreationDTO poll) {
         String pollDesc = poll.getPollDesc();
