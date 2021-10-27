@@ -10,16 +10,22 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.sql.Timestamp;
+
 
 @Configuration
 public class LoadDatabase {
     private static final Logger log = LoggerFactory.getLogger(LoadDatabase.class);
+    private final Timestamp startTime = new Timestamp(System.currentTimeMillis());
+    private final Timestamp endTime = new Timestamp(System.currentTimeMillis());
+    private final Poll poll =  new Poll("Second poll", "WDYM", startTime, endTime, false, false, 11,3 );
+    private final Account account = new Account("OlaNordmann", "Password", "ola@mail.com", "Ola", "Nordmann", poll);
 
     @Bean
     CommandLineRunner initDatabase(AccountRepository accountRepository, PollRepository pollRepository) {
         return args -> {
-            log.info("Preloading " + accountRepository.save(new Account("OlaNordmann", "Password", "ola@mail.com", "Ola", "Nordmann")));
-            log.info("Preloading " + pollRepository.save(new Poll("Second poll", "WDYM", "10.10.21", "11.11.21","1", false, false, 11,3 )));
+            log.info("Preloading " + accountRepository.save(account));
+            log.info("Preloading " + pollRepository.save(poll));
         };
     }
 
