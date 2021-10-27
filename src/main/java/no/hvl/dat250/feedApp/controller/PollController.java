@@ -42,4 +42,8 @@ public class PollController {
         pollService.delete(id);
     }
 
+    @PutMapping("polls/{id}/yes")
+    public PollDTO updateYes(@PathVariable Long id) {
+        return mapper.toDTO(pollService.votedYes(id));
+    }
 }

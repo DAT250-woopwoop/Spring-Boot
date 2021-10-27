@@ -8,7 +8,8 @@ import java.time.*;
 import java.util.*;
 import java.util.stream.*;
 
-public class Mapper {
+public class
+Mapper {
 
     public AccountDTO toDTO(Account account) {
         long id = account.getId();
