@@ -15,4 +15,6 @@ public interface PollService {
     void delete(Long id);
 
     Poll votedYes(Long id);
+
+    Poll votedNo(Long id);
 }

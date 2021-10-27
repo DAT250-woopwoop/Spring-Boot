@@ -54,4 +54,14 @@ public class PollServiceImpl implements PollService {
         update(id, poll);
         return poll;
     }
+
+    @Override
+    public Poll votedNo(Long id) {
+        Poll poll = find(id);
+        int no = poll.getNoOption();
+        no++;
+        poll.setNoOption(no);
+        update(id, poll);
+        return poll;
+    }
 }
