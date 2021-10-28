@@ -3,8 +3,6 @@ package no.hvl.dat250.feedApp.dto;
 import no.hvl.dat250.feedApp.entity.*;
 
 import java.sql.*;
-import java.sql.Date;
-import java.time.*;
 import java.util.*;
 import java.util.stream.*;
 
