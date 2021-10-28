@@ -51,6 +51,4 @@ public class PollController {
     public PollDTO updateNo(@PathVariable Long id) {
         return mapper.toDTO(pollService.votedNo(id));
     }
-
-
 }
