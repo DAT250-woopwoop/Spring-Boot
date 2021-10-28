@@ -17,4 +17,6 @@ public interface AccountService {
     void deleteAccount(Long id);
 
     Poll makeNewPoll(Poll poll, Long id);
+
+    Account getAccountByUsername(String username);
 }
