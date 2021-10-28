@@ -4,6 +4,7 @@ import no.hvl.dat250.feedApp.entity.*;
 import no.hvl.dat250.feedApp.reposetory.*;
 import no.hvl.dat250.feedApp.service.*;
 import org.springframework.beans.factory.annotation.*;
+import org.springframework.security.crypto.bcrypt.*;
 import org.springframework.stereotype.*;
 
 import java.util.*;
@@ -17,8 +18,13 @@ public class AccountServiceImpl implements AccountService {
     @Autowired
     PollRepository pollRepository;
 
+    @Autowired
+    BCryptPasswordEncoder bCryptPasswordEncoder;
+
     @Override
     public Account makeNewAccount(Account account) {
+        account.setPassword(bCryptPasswordEncoder.encode(account.getPassword()));
+        System.out.println(account);
         return accountRepository.save(account);
     }
 
@@ -65,5 +71,10 @@ public class AccountServiceImpl implements AccountService {
 
 
         return poll;
+    }
+
+    @Override
+    public Account getAccountByUsername(String username) {
+        return accountRepository.findByUsername(username);
     }
 }
