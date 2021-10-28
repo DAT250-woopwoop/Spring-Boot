@@ -60,6 +60,4 @@ public class AccountController {
         Poll poll = mapper.toDTO(pollCreationDTO);
         return mapper.toDTO(accountService.makeNewPoll(poll, userId));
     }
-
-
 }

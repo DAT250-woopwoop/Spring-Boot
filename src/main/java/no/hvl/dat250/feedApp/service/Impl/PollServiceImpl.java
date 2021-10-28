@@ -44,4 +44,24 @@ public class PollServiceImpl implements PollService {
 
         pollRepository.delete(poll.get());
     }
+
+    @Override
+    public Poll votedYes(Long id) {
+        Poll poll = find(id);
+        int yes = poll.getYesOption();
+        yes++;
+        poll.setYesOption(yes);
+        update(id, poll);
+        return poll;
+    }
+
+    @Override
+    public Poll votedNo(Long id) {
+        Poll poll = find(id);
+        int no = poll.getNoOption();
+        no++;
+        poll.setNoOption(no);
+        update(id, poll);
+        return poll;
+    }
 }
