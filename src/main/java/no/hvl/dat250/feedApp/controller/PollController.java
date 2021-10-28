@@ -47,7 +47,7 @@ public class PollController {
         return mapper.toDTO(pollService.votedYes(id));
     }
 
-    @PutMapping("polls{id}/no")
+    @PutMapping("polls/{id}/no")
     public PollDTO updateNo(@PathVariable Long id) {
         return mapper.toDTO(pollService.votedNo(id));
     }
