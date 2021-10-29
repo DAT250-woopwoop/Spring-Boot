@@ -4,9 +4,10 @@ import com.auth0.jwt.*;
 import com.auth0.jwt.algorithms.*;
 import com.fasterxml.jackson.databind.*;
 import no.hvl.dat250.feedApp.entity.*;
+import org.springframework.boot.jackson.*;
+import org.springframework.boot.json.*;
 import org.springframework.security.authentication.*;
 import org.springframework.security.core.*;
-import org.springframework.security.core.authority.*;
 import org.springframework.security.core.userdetails.*;
 import org.springframework.security.web.authentication.*;
 
@@ -58,9 +59,11 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                 .withExpiresAt(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
                 .sign(Algorithm.HMAC512(SECRET.getBytes()));
 
-        String body = ((User) auth.getPrincipal()).getUsername() + " " + token;
+       // String body = ((User) auth.getPrincipal()).getUsername() + " " + token;
 
-        res.getWriter().write(body);
+        String json = "{\""+ TOKEN_PREFIX + "\":\""+ token +"\"}";
+
+        res.getWriter().write(json);
         res.getWriter().flush();
     }
 
