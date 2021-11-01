@@ -23,6 +23,12 @@ public class Account extends Updatable {
     private String f_name;
     private String l_name;
 
+    @OneToMany(mappedBy = "account", cascade = CascadeType.MERGE)
+    private List<Poll> polls = new ArrayList<>();
+
+    @OneToMany(mappedBy = "account")
+    private List<PollVote> myVotes;
+
     public Account() {}
 
     public Account(String username, String password, String e_mail, String f_name, String l_name, Poll poll) {
@@ -33,9 +39,6 @@ public class Account extends Updatable {
         this.l_name = l_name;
         polls.add(poll);
     }
-
-    @OneToMany(mappedBy = "account", cascade = CascadeType.MERGE)
-    private List<Poll> polls = new ArrayList<>();
 
     public String toString(){
         return "User{ id = " + this.id + ", name = " + this.f_name +" "+ this.l_name + ", e_mail = " +
@@ -50,10 +53,5 @@ public class Account extends Updatable {
         setIfNotNull(this::setL_name, updatedAccount.getL_name());
     }
 
-    private <T> void setIfNotNull(final Consumer<T> setter, final T value) {
-        if (value != null) {
-            setter.accept(value);
-        }
-    }
 
 }

@@ -31,11 +31,13 @@ Mapper {
         Timestamp endTime = poll.getEndTime();
         boolean privatePoll = poll.isPrivatePoll();
         boolean closed = poll.isClosed();
-        int yesOption = poll.getYesOption();
-        int noOption = poll.getNoOption();
+        List<Long> answers = poll
+                .getVotes()
+                .stream()
+                .map(PollVote::getId)
+                .collect(Collectors.toList());
         long accountId = poll.getAccount().getId();
-
-        return new PollDTO(id,  pollDesc, pollName, startTime, endTime, privatePoll, closed, yesOption, noOption, accountId);
+        return new PollDTO(id,  pollDesc, pollName, startTime, endTime, privatePoll, closed, answers, accountId);
     }
     public Poll toDTO(PollCreationDTO poll) {
         String pollDesc = poll.getPollDesc();
@@ -44,10 +46,16 @@ Mapper {
         Timestamp endTime = Timestamp.valueOf(poll.getEndTime());
         boolean privatePoll = poll.isPrivatePoll();
         boolean closed = poll.isClosed();
-        int yesOption = poll.getYesOption();
-        int noOption = poll.getNoOption();
 
-        return new Poll(pollDesc, pollName, startTime, endTime, privatePoll, closed, yesOption, noOption);
+        return new Poll(pollDesc, pollName, startTime, endTime, privatePoll, closed);
+    }
 
+    public PollVoteDTO toDTO(PollVote pollVote) {
+        Long id = pollVote.getId();
+        Answer answer = pollVote.getAnswer();
+        Long pollId = pollVote.getId();
+        Long accountId = pollVote.getAccount().getId();
+
+        return new PollVoteDTO(id, answer, pollId, accountId);
     }
 }

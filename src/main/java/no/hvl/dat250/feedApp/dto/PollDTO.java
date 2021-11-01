@@ -3,6 +3,7 @@ package no.hvl.dat250.feedApp.dto;
 import lombok.*;
 
 import java.sql.*;
+import java.util.*;
 
 
 @Getter
@@ -15,12 +16,12 @@ public class PollDTO {
     private Timestamp endTime;
     private boolean privatePoll;
     private boolean closed;
-    private int yesOption;
-    private int noOption;
+    private List<Long> answers;
 
     private Long accountId;
 
-    public PollDTO(long id, String pollDesc, String pollName, Timestamp startTime, Timestamp endTime, boolean privatePoll, boolean closed, int yesOption, int noOption, Long accountId) {
+    public PollDTO(Long id, String pollDesc, String pollName, Timestamp startTime, Timestamp endTime,
+                   boolean privatePoll, boolean closed, List<Long> answers, Long accountId) {
         this.id = id;
         this.pollDesc = pollDesc;
         this.pollName = pollName;
@@ -28,8 +29,7 @@ public class PollDTO {
         this.endTime = endTime;
         this.privatePoll = privatePoll;
         this.closed = closed;
-        this.yesOption = yesOption;
-        this.noOption = noOption;
+        this.answers = answers;
         this.accountId = accountId;
     }
 }
