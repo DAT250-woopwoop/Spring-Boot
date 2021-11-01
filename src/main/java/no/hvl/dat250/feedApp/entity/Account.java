@@ -12,7 +12,7 @@ import java.util.function.*;
 @Getter
 @Setter
 @Table(name = "accounts")
-public class Account {
+public class Account extends Updatable {
     @Id
     @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -5,12 +5,13 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.sql.*;
+import java.util.*;
 import java.util.function.*;
 
 @Entity
 @Getter
 @Setter
-public class Poll {
+public class Poll extends Updatable {
 
     @Id
     @Column(name = "id", nullable = false)
