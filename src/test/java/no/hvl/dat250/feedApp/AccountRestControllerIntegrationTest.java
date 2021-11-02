@@ -1,7 +1,7 @@
 package no.hvl.dat250.feedApp;
 
 import no.hvl.dat250.feedApp.reposetory.AccountRepository;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -11,6 +11,7 @@ import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.jsonPath;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -29,6 +30,12 @@ public class AccountRestControllerIntegrationTest {
 
     @Autowired
     private AccountRepository repository;
+
+    @Test
+    void contextLoads() {
+        assertTrue(true);
+    }
+
 
     // write test cases here
     /*@Test
