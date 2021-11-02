@@ -67,4 +67,5 @@ public class PollServiceImpl implements PollService {
         pollVoteRepository.saveAndFlush(pollVote);
         return storedPoll;
     }
+
 }
