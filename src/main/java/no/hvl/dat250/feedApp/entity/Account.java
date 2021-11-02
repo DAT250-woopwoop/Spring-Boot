@@ -26,8 +26,8 @@ public class Account extends Updatable {
     @OneToMany(mappedBy = "account", cascade = CascadeType.MERGE)
     private List<Poll> polls = new ArrayList<>();
 
-    @OneToMany(mappedBy = "account")
-    private List<PollVote> myVotes;
+    @OneToMany(mappedBy = "account", cascade = CascadeType.MERGE)
+    private List<PollVote> myVotes = new ArrayList<>();;
 
     public Account() {}
 

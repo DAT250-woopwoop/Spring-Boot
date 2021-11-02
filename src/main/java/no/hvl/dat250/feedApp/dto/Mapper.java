@@ -1,6 +1,7 @@
 package no.hvl.dat250.feedApp.dto;
 
 import no.hvl.dat250.feedApp.entity.*;
+import no.hvl.dat250.feedApp.entity.enums.*;
 
 import java.sql.*;
 import java.util.*;
@@ -20,8 +21,13 @@ Mapper {
                 .stream()
                 .map(Poll::getId)
                 .collect(Collectors.toList());
+        List<Long> myVotes = account
+                .getMyVotes()
+                .stream()
+                .map(PollVote::getId)
+                .collect(Collectors.toList());
 
-        return new AccountDTO(id, username, e_mail, f_name, l_name, polls);
+        return new AccountDTO(id, username, e_mail, f_name, l_name, polls, myVotes);
     }
     public PollDTO toDTO(Poll poll) {
         long id = poll.getId();
@@ -31,13 +37,13 @@ Mapper {
         Timestamp endTime = poll.getEndTime();
         boolean privatePoll = poll.isPrivatePoll();
         boolean closed = poll.isClosed();
-        List<Long> answers = poll
+        List<Long> pollVotes = poll
                 .getVotes()
                 .stream()
                 .map(PollVote::getId)
                 .collect(Collectors.toList());
         long accountId = poll.getAccount().getId();
-        return new PollDTO(id,  pollDesc, pollName, startTime, endTime, privatePoll, closed, answers, accountId);
+        return new PollDTO(id,  pollDesc, pollName, startTime, endTime, privatePoll, closed, pollVotes, accountId);
     }
     public Poll toDTO(PollCreationDTO poll) {
         String pollDesc = poll.getPollDesc();

@@ -66,7 +66,7 @@ public class Poll extends Updatable {
                 ", endTime=" + endTime +
                 ", privatePoll=" + privatePoll +
                 ", closed=" + closed +
-                ", votes=" + votes +
+               // ", votes=" + votes +
                 ", account=" + account +
                 '}';
     }

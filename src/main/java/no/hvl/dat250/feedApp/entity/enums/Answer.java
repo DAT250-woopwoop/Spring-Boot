@@ -1,6 +1,4 @@
-package no.hvl.dat250.feedApp.entity;
-
-import java.util.*;
+package no.hvl.dat250.feedApp.entity.enums;
 
 public enum Answer {
 

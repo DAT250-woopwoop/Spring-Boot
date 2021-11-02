@@ -1,11 +1,13 @@
 package no.hvl.dat250.feedApp.entity;
 
 import lombok.*;
+import no.hvl.dat250.feedApp.entity.enums.*;
 
 import javax.persistence.*;
 
 @Entity
-@Data
+@Getter
+@Setter
 public class PollVote extends Updatable{
     @Id
     @Column(name = "id", nullable = false)
@@ -30,4 +32,13 @@ public class PollVote extends Updatable{
 
     }
 
+    @Override
+    public String toString() {
+        return "PollVote{" +
+                "id=" + id +
+                ", answer=" + answer +
+                ", poll=" + poll +
+                ", account=" + account +
+                '}';
+    }
 }

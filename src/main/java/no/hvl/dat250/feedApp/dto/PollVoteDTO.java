@@ -1,7 +1,7 @@
 package no.hvl.dat250.feedApp.dto;
 
 import lombok.*;
-import no.hvl.dat250.feedApp.entity.*;
+import no.hvl.dat250.feedApp.entity.enums.*;
 
 @Data
 public class PollVoteDTO {
