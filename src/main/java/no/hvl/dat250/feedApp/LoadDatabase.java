@@ -17,7 +17,7 @@ import java.sql.Timestamp;
 public class LoadDatabase {
     /*
     private static final Logger log = LoggerFactory.getLogger(LoadDatabase.class);
-    private final Timestamp startTime = new Timestamp(System.currentTimeMillis());
+    private final Timestamp startTime = new Timestamp(System.currentTimeMillis()); //Timestamp.valueOf("10.11.21");
     private final Timestamp endTime = new Timestamp(System.currentTimeMillis());
     private final Poll poll =  new Poll("Second poll", "WDYM", startTime, endTime, false, false, 11,3 );
     private final Account account = new Account("OlaNordmann", "Password", "ola@mail.com", "Ola", "Nordmann", poll);
@@ -26,7 +26,7 @@ public class LoadDatabase {
     CommandLineRunner initDatabase(AccountRepository accountRepository, PollRepository pollRepository) {
         return args -> {
             log.info("Preloading " + accountRepository.save(account));
-            log.info("Preloading " + pollRepository.save(poll));
+            //log.info("Preloading " + pollRepository.save(poll));
         };
     }
 
