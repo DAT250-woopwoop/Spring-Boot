@@ -53,7 +53,7 @@ Mapper {
     public PollVoteDTO toDTO(PollVote pollVote) {
         Long id = pollVote.getId();
         Answer answer = pollVote.getAnswer();
-        Long pollId = pollVote.getId();
+        Long pollId = pollVote.getPoll().getId();
         Long accountId = pollVote.getAccount().getId();
 
         return new PollVoteDTO(id, answer, pollId, accountId);
