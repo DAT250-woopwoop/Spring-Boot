@@ -7,11 +7,9 @@ import no.hvl.dat250.feedApp.service.*;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.*;
 
 import static java.util.stream.Collectors.toList;
 
-@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 public class AccountController {
 
@@ -39,7 +37,7 @@ public class AccountController {
         return mapper.toDTO(accountService.findAccountById(id));
     }
 
-    @PostMapping("/users")
+    @PostMapping("/users/signup")
     public AccountDTO newAccount(@RequestBody Account account) {
         return mapper.toDTO(accountService.makeNewAccount(account));
 

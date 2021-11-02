@@ -11,6 +11,4 @@ public class PollCreationDTO {
         private String endTime;
         private boolean privatePoll;
         private boolean closed;
-        private int yesOption;
-        private int noOption;
 }

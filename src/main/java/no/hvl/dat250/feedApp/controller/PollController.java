@@ -1,7 +1,7 @@
 package no.hvl.dat250.feedApp.controller;
 
 import no.hvl.dat250.feedApp.dto.*;
-import no.hvl.dat250.feedApp.entity.Poll;
+import no.hvl.dat250.feedApp.entity.*;
 import no.hvl.dat250.feedApp.service.*;
 import org.springframework.web.bind.annotation.*;
 
@@ -42,13 +42,13 @@ public class PollController {
         pollService.delete(id);
     }
 
-    @PutMapping("polls/{id}/yes")
-    public PollDTO updateYes(@PathVariable Long id) {
-        return mapper.toDTO(pollService.votedYes(id));
+    @PutMapping("polls/{userId}/{pollId}/yes")
+    public PollDTO updateYes(@PathVariable Long pollId, @RequestBody PollVote pollVote, @PathVariable Long userId) {
+        return mapper.toDTO(pollService.voted(pollVote, pollId, userId));
     }
 
-    @PutMapping("polls/{id}/no")
-    public PollDTO updateNo(@PathVariable Long id) {
-        return mapper.toDTO(pollService.votedNo(id));
+    @PutMapping("polls/{userId}/{pollId}/no")
+    public PollDTO updateNo(@PathVariable Long pollId, @RequestBody PollVote pollVote, @PathVariable Long userId) {
+        return mapper.toDTO(pollService.voted(pollVote, pollId, userId));
     }
 }

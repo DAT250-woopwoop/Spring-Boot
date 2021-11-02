@@ -10,7 +10,7 @@
         <properties>
             <property name="javax.persistence.jdbc.driver" value="org.apache.derby.jdbc.EmbeddedDriver"/>
             <property name="javax.persistence.jdbc.url"
-                      value="jdbc:derby:C:\Users\mhhun\OneDrive\Documents\Master\7.semester\DAT250\Ny\feedAppSpringBootDB;create=true"/>
+                      value="jdbc:derby:/Users/mathias/Desktop/feedappDB;create=true;schema=TEST"/>
             <property name="javax.persistence.jdbc.user" value="test"/>
             <property name="javax.persistence.jdbc.password" value="test"/>
             <property name="eclipselink.ddl-generation" value="create-tables"/>

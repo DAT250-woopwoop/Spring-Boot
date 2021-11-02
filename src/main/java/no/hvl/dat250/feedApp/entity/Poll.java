@@ -5,12 +5,13 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.sql.*;
+import java.util.*;
 import java.util.function.*;
 
 @Entity
 @Getter
 @Setter
-public class Poll {
+public class Poll extends Updatable {
 
     @Id
     @Column(name = "id", nullable = false)
@@ -23,25 +24,24 @@ public class Poll {
     private Timestamp endTime;
     private boolean privatePoll;
     private boolean closed;
-    private int yesOption;
-    private int noOption;
+
+    @OneToMany(mappedBy = "poll")
+    private List<PollVote> votes;
 
     @ManyToOne
-    @JoinColumn(name = "account_id")
     private Account account;
 
     public Poll(){}
 
     public Poll(String pollDesc, String pollName, Timestamp startTime, Timestamp endTime,
-                Boolean privatePoll, Boolean closed, int yesOption, int noOption) {
+                Boolean privatePoll, Boolean closed) {
         this.pollDesc = pollDesc;
         this.pollName = pollName;
         this.startTime = startTime;
         this.endTime = endTime;
         this.privatePoll = privatePoll;
         this.closed = closed;
-        this.yesOption = yesOption;
-        this.noOption = noOption;
+        this.votes = new ArrayList<>();
 
     }
 
@@ -53,14 +53,7 @@ public class Poll {
         setIfNotNull(this::setEndTime, updatedPoll.getEndTime());
         setIfNotNull(this::setPrivatePoll, updatedPoll.isPrivatePoll());
         setIfNotNull(this::setClosed, updatedPoll.isClosed());
-        setIfNotNull(this::setYesOption, updatedPoll.getYesOption());
-        setIfNotNull(this::setNoOption, updatedPoll.getNoOption());
-    }
-
-    private <T> void setIfNotNull(final Consumer<T> setter, final T value) {
-        if (value != null) {
-            setter.accept(value);
-        }
+        setIfNotNull(this::setVotes, updatedPoll.getVotes());
     }
 
     @Override
@@ -69,12 +62,11 @@ public class Poll {
                 "id=" + id +
                 ", pollDesc='" + pollDesc + '\'' +
                 ", pollName='" + pollName + '\'' +
-                ", startTime='" + startTime + '\'' +
-                ", endTime='" + endTime + '\'' +
+                ", startTime=" + startTime +
+                ", endTime=" + endTime +
                 ", privatePoll=" + privatePoll +
                 ", closed=" + closed +
-                ", yesOption=" + yesOption +
-                ", noOption=" + noOption +
+               // ", votes=" + votes +
                 ", account=" + account +
                 '}';
     }

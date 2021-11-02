@@ -15,6 +15,7 @@ import java.sql.Timestamp;
 
 @Configuration
 public class LoadDatabase {
+    /*
     private static final Logger log = LoggerFactory.getLogger(LoadDatabase.class);
     private final Timestamp startTime = new Timestamp(System.currentTimeMillis()); //Timestamp.valueOf("10.11.21");
     private final Timestamp endTime = new Timestamp(System.currentTimeMillis());
@@ -28,5 +29,7 @@ public class LoadDatabase {
             //log.info("Preloading " + pollRepository.save(poll));
         };
     }
+
+     */
 
 }

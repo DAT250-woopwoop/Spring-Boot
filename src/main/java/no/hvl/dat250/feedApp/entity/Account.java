@@ -12,7 +12,7 @@ import java.util.function.*;
 @Getter
 @Setter
 @Table(name = "accounts")
-public class Account {
+public class Account extends Updatable {
     @Id
     @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,6 +22,12 @@ public class Account {
     private String e_mail;
     private String f_name;
     private String l_name;
+
+    @OneToMany(mappedBy = "account", cascade = CascadeType.MERGE)
+    private List<Poll> polls = new ArrayList<>();
+
+    @OneToMany(mappedBy = "account", cascade = CascadeType.MERGE)
+    private List<PollVote> myVotes = new ArrayList<>();;
 
     public Account() {}
 
@@ -33,9 +39,6 @@ public class Account {
         this.l_name = l_name;
         polls.add(poll);
     }
-
-    @OneToMany(mappedBy = "account", cascade = CascadeType.MERGE)
-    private List<Poll> polls = new ArrayList<>();
 
     public String toString(){
         return "User{ id = " + this.id + ", name = " + this.f_name +" "+ this.l_name + ", e_mail = " +
@@ -50,10 +53,5 @@ public class Account {
         setIfNotNull(this::setL_name, updatedAccount.getL_name());
     }
 
-    private <T> void setIfNotNull(final Consumer<T> setter, final T value) {
-        if (value != null) {
-            setter.accept(value);
-        }
-    }
 
 }

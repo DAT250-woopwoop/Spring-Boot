@@ -14,6 +14,12 @@ public class PollServiceImpl implements PollService {
     @Autowired
     PollRepository pollRepository;
 
+    @Autowired
+    AccountRepository accountRepository;
+
+    @Autowired
+    PollVoteRepository pollVoteRepository;
+
     @Override
     public List<Poll> findAll() {
         return pollRepository.findAll();
@@ -22,7 +28,6 @@ public class PollServiceImpl implements PollService {
     @Override
     public Poll find(Long id) {
         Optional<Poll> poll = pollRepository.findById(id);
-
         return poll.orElse(null);
 
     }
@@ -46,23 +51,21 @@ public class PollServiceImpl implements PollService {
     }
 
     @Override
-    public Poll votedYes(Long id) {
-        Poll poll = find(id);
-        int yes = poll.getYesOption();
-        yes++;
-        poll.setYesOption(yes);
-        update(id, poll);
-        return poll;
-    }
+    public Poll voted(PollVote pollVote, Long pollId, Long accId) {
+        Optional<Account> account = accountRepository.findById(accId);
+        if (account.isEmpty()) return null; // TODO: 01/11/2021 Burde throwe
 
-    @Override
-    public Poll votedNo(Long id) {
-        Poll poll = find(id);
-        int no = poll.getNoOption();
-        no++;
-        poll.setNoOption(no);
-        update(id, poll);
-        return poll;
+        Optional<Poll> poll = pollRepository.findById(pollId);
+        if (poll.isEmpty()) return null;
+
+        Account storedAccount = account.get();
+        Poll storedPoll = poll.get();
+
+        pollVote.setPoll(storedPoll);
+        pollVote.setAccount(storedAccount);
+
+        pollVoteRepository.saveAndFlush(pollVote);
+        return storedPoll;
     }
 
 }

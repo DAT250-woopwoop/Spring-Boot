@@ -12,7 +12,7 @@
 	<artifactId>feedApp</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>feedApp</name>
-	<description>Demo project for Spring Boot</description>
+	<description>FeedApp DAT250</description>
 	<properties>
 		<java.version>11</java.version>
 	</properties>
@@ -72,6 +72,28 @@
 			<groupId>org.springframework.hateoas</groupId>
 			<artifactId>spring-hateoas</artifactId>
 			<version>1.3.4</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-jdbc</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+		<dependency>
+		<groupId>org.springframework.security</groupId>
+		<artifactId>spring-security-test</artifactId>
+		<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.auth0</groupId>
+			<artifactId>java-jwt</artifactId>
+			<version>3.18.2</version>
 		</dependency>
 	</dependencies>
 
