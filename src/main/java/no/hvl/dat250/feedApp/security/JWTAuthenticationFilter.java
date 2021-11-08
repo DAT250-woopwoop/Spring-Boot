@@ -36,8 +36,6 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         try {
             Account creds = new ObjectMapper()
                     .readValue(req.getInputStream(), Account.class);
-            System.err.println(creds);
-
             return authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
                             creds.getUsername(),
@@ -61,7 +59,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
        // String body = ((User) auth.getPrincipal()).getUsername() + " " + token;
 
-        String json = "{\""+ TOKEN_PREFIX + "\":\""+ token +"\"}";
+        String json = "{\""+ TOKEN_PREFIX.strip() + "\":\""+ token +"\"}";
 
         res.getWriter().write(json);
         res.getWriter().flush();
