@@ -12,19 +12,21 @@ import java.util.*;
 @Service
 public class AccountServiceImpl implements AccountService {
 
-    @Autowired
     AccountRepository accountRepository;
 
-    @Autowired
     PollRepository pollRepository;
 
-    @Autowired
     BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    public AccountServiceImpl(AccountRepository accountRepository, PollRepository pollRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
+        this.accountRepository = accountRepository;
+        this.pollRepository = pollRepository;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+    }
 
     @Override
     public Account makeNewAccount(Account account) {
         account.setPassword(bCryptPasswordEncoder.encode(account.getPassword()));
-        System.out.println(account);
         return accountRepository.save(account);
     }
 
