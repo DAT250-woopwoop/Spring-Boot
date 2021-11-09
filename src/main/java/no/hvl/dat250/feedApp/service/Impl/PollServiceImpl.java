@@ -11,14 +11,17 @@ import java.util.*;
 @Service
 public class PollServiceImpl implements PollService {
 
-    @Autowired
-    PollRepository pollRepository;
+    private final PollRepository pollRepository;
 
-    @Autowired
-    AccountRepository accountRepository;
+    private final AccountRepository accountRepository;
 
-    @Autowired
-    PollVoteRepository pollVoteRepository;
+    private final PollVoteRepository pollVoteRepository;
+
+    public PollServiceImpl(PollRepository pollRepository, AccountRepository accountRepository, PollVoteRepository pollVoteRepository) {
+        this.pollRepository = pollRepository;
+        this.accountRepository = accountRepository;
+        this.pollVoteRepository = pollVoteRepository;
+    }
 
     @Override
     public List<Poll> findAll() {
