@@ -18,11 +18,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(AccountController.class)
-class AccountControllerTest {
+class PollControllerTest {
 
     @Autowired
     private MockMvc mvc;
 
+    @MockBean
+    private PollController pollController;
     @MockBean
     private AccountService accountService;
     @MockBean
@@ -33,7 +35,7 @@ class AccountControllerTest {
 
     @Test
     public void notGivenAuthRequestOnPrivateService_shouldBeForbiddenWith403() throws Exception {
-        mvc.perform(get("/users").contentType(MediaType.APPLICATION_JSON))
+        mvc.perform(get("/polls").contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isForbidden());
     }
 
@@ -41,7 +43,7 @@ class AccountControllerTest {
     @WithMockUser(value = "spring")
     @Test
     public void givenAuthRequestOnPrivateService_shouldSucceedWith200() throws Exception {
-        mvc.perform(get("/users").contentType(MediaType.APPLICATION_JSON))
+        mvc.perform(get("/polls").contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
     }
 
