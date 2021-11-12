@@ -25,4 +25,9 @@ public class PollVoteController {
                 .map(mapper::toDTO)
                 .collect(Collectors.toList());
     }
+
+    @GetMapping("/pollvotes/{id}")
+    public PollVoteDTO findById(@PathVariable Long id){
+        return mapper.toDTO(pollVoteService.find(id));
+    }
 }

@@ -18,4 +18,10 @@ public class PollVoteServiceImpl implements PollVoteService {
     public List<PollVote> findAll() {
         return pollVoteRepository.findAll();
     }
+
+    @Override
+    public PollVote find(Long id) {
+        Optional<PollVote> pollVote = pollVoteRepository.findById(id);
+        return pollVote.orElse(null);
+    }
 }
