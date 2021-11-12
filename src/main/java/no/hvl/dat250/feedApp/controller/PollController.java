@@ -42,7 +42,7 @@ public class PollController {
         pollService.delete(id);
     }
 
-    @PutMapping("polls/{userId}/{pollId}")
+    @PostMapping("polls/{userId}/{pollId}")
     public PollDTO updateYes(@PathVariable Long pollId, @RequestBody PollVote pollVote, @PathVariable Long userId) {
         System.out.println(pollVote);
         return mapper.toDTO(pollService.voted(pollVote, pollId, userId));
