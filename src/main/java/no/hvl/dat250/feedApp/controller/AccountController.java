@@ -14,7 +14,8 @@ import static java.util.stream.Collectors.toList;
 public class AccountController {
 
 
-    private final AccountService accountService;
+    private final AccountService
+            accountService;
     private final PollRepository pollRepository;
     private final Mapper mapper = new Mapper(); // TODO: 25/10/2021 Should be a bean(?)
 
@@ -35,6 +36,11 @@ public class AccountController {
     @GetMapping("/users/{id}")
     public AccountDTO findAccountById(@PathVariable Long id) {
         return mapper.toDTO(accountService.findAccountById(id));
+    }
+
+    @GetMapping("/users/username/{username}")
+    public AccountDTO findAccountByUsername(@PathVariable String username) {
+        return mapper.toDTO(accountService.getAccountByUsername(username));
     }
 
     @PostMapping("/users/signup")
