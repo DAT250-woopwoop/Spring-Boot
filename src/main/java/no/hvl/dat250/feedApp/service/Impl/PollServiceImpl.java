@@ -1,9 +1,9 @@
 package no.hvl.dat250.feedApp.service.Impl;
 
 import no.hvl.dat250.feedApp.entity.*;
+import no.hvl.dat250.feedApp.exceptions.*;
 import no.hvl.dat250.feedApp.reposetory.*;
 import no.hvl.dat250.feedApp.service.*;
-import org.springframework.beans.factory.annotation.*;
 import org.springframework.stereotype.*;
 
 import java.util.*;
@@ -31,6 +31,7 @@ public class PollServiceImpl implements PollService {
     @Override
     public Poll find(Long id) {
         Optional<Poll> poll = pollRepository.findById(id);
+        if (poll.isEmpty()) throw new NoPollFoundException("No poll with given id");
         return poll.orElse(null);
 
     }
@@ -38,7 +39,7 @@ public class PollServiceImpl implements PollService {
     @Override
     public Poll update(Long id, Poll updatedPoll) {
         Optional<Poll> poll = pollRepository.findById(id);
-        if (poll.isEmpty()) return null;
+        if (poll.isEmpty()) throw new NoPollFoundException("No poll with given id");
         Poll storedPoll = poll.get();
 
         storedPoll.update(updatedPoll);
@@ -48,7 +49,7 @@ public class PollServiceImpl implements PollService {
     @Override
     public void delete(Long id) {
         Optional<Poll> poll = pollRepository.findById(id);
-        if (poll.isEmpty()) return;
+        if (poll.isEmpty()) throw new NoPollFoundException("No poll with given id");
 
         pollRepository.delete(poll.get());
     }
@@ -56,10 +57,16 @@ public class PollServiceImpl implements PollService {
     @Override
     public Poll voted(PollVote pollVote, Long pollId, Long accId) {
         Optional<Account> account = accountRepository.findById(accId);
-        if (account.isEmpty()) return null; // TODO: 01/11/2021 Burde throwe
+        if (account.isEmpty()) throw new NoAccountFoundException("No account with given id");
 
         Optional<Poll> poll = pollRepository.findById(pollId);
-        if (poll.isEmpty()) return null;
+        if (poll.isEmpty()) throw new NoPollFoundException("No poll with given id");
+
+        if (poll.get()
+                .getVotes()
+                .stream()
+                .anyMatch(e -> Objects.equals(e.getAccount().getId(), account.get().getId()))
+        ) throw new NoDuplicateException("Given Account have already voted");
 
         Account storedAccount = account.get();
         Poll storedPoll = poll.get();

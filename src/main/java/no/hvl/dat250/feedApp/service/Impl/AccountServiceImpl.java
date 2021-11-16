@@ -1,9 +1,9 @@
 package no.hvl.dat250.feedApp.service.Impl;
 
 import no.hvl.dat250.feedApp.entity.*;
+import no.hvl.dat250.feedApp.exceptions.*;
 import no.hvl.dat250.feedApp.reposetory.*;
 import no.hvl.dat250.feedApp.service.*;
-import org.springframework.beans.factory.annotation.*;
 import org.springframework.security.crypto.bcrypt.*;
 import org.springframework.stereotype.*;
 
@@ -38,13 +38,14 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public Account findAccountById(Long id) {
         Optional<Account> account = Optional.of(accountRepository.findById(id)).get();
+        if (account.isEmpty()) throw new NoAccountFoundException("No account with given id");
         return account.orElse(null);
     }
 
     @Override
     public Account updateAccount(Account account, Long id) {
         Optional<Account> optionalAccount = Optional.of(accountRepository.findById(id)).get();
-        if (optionalAccount.isEmpty()) return null;
+        if (optionalAccount.isEmpty()) throw new NoAccountFoundException("No account with given id");
         Account storedAcc = optionalAccount.get();
 
         storedAcc.update(account);
@@ -61,7 +62,7 @@ public class AccountServiceImpl implements AccountService {
     public Poll makeNewPoll(Poll poll, Long userId) {
         Optional<Account> account = accountRepository.findById(userId);
 
-        if (account.isEmpty()) return null;
+        if (account.isEmpty()) throw new NoAccountFoundException("No account with given id");
 
         Account acc = account.get();
 
