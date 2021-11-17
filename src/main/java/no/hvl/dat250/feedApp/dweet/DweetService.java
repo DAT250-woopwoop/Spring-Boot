@@ -1,6 +1,9 @@
 package no.hvl.dat250.feedApp.dweet;
 
+import no.hvl.dat250.feedApp.dto.*;
 import no.hvl.dat250.feedApp.entity.*;
+import no.hvl.dat250.feedApp.rabbit.*;
+import no.hvl.dat250.feedApp.service.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.scheduling.*;
 import org.springframework.stereotype.*;
@@ -14,7 +17,15 @@ import java.util.*;
 public class DweetService {
 
     @Autowired
+    PollService pollService;
+
+    @Autowired
     TaskScheduler taskScheduler;
+
+    @Autowired
+    RabbitMQSender rabbitMQSender;
+
+    Mapper mapper = new Mapper();
 
     public void send(Poll poll, boolean open) {
         Date delay;
@@ -31,6 +42,9 @@ public class DweetService {
         taskScheduler.schedule(() -> {
             try {
                 sendPost(poll, status);
+                if (status == "close"){
+                    rabbitMQSender.send(mapper.toDTO(pollService.find(poll.getId())));
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -44,7 +58,7 @@ public class DweetService {
         http.setRequestMethod("POST");
         http.setDoOutput(true);
 
-        byte[] out = ("{\"question\":\"" + poll.getPollName() + "\",\"status\":\"" + status + "\"}").getBytes(StandardCharsets.UTF_8);
+        byte[] out = ("{\"question\":\"" + poll.getPollName() + "\",\"status\":\"" + status + "\",\"id\":\"" + poll.getId() + "\"}").getBytes(StandardCharsets.UTF_8);
         int length = out.length;
 
         http.setFixedLengthStreamingMode(length);
