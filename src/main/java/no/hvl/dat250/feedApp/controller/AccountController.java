@@ -1,9 +1,11 @@
 package no.hvl.dat250.feedApp.controller;
 
 import no.hvl.dat250.feedApp.dto.*;
+import no.hvl.dat250.feedApp.dweet.*;
 import no.hvl.dat250.feedApp.entity.*;
 import no.hvl.dat250.feedApp.reposetory.*;
 import no.hvl.dat250.feedApp.service.*;
+import org.springframework.beans.factory.annotation.*;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,15 +15,12 @@ import static java.util.stream.Collectors.toList;
 @RestController
 public class AccountController {
 
+    private final AccountService accountService;
 
-    private final AccountService
-            accountService;
-    private final PollRepository pollRepository;
     private final Mapper mapper = new Mapper(); // TODO: 25/10/2021 Should be a bean(?)
 
-    AccountController(PollRepository pollRepository, AccountService accountService){
+    AccountController(AccountService accountService){
         this.accountService = accountService;
-        this.pollRepository = pollRepository;
     }
 
     @GetMapping("/users")

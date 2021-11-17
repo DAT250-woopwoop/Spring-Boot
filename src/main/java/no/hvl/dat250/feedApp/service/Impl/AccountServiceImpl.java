@@ -1,9 +1,11 @@
 package no.hvl.dat250.feedApp.service.Impl;
 
+import no.hvl.dat250.feedApp.dweet.*;
 import no.hvl.dat250.feedApp.entity.*;
 import no.hvl.dat250.feedApp.exceptions.*;
 import no.hvl.dat250.feedApp.reposetory.*;
 import no.hvl.dat250.feedApp.service.*;
+import org.springframework.beans.factory.annotation.*;
 import org.springframework.security.crypto.bcrypt.*;
 import org.springframework.stereotype.*;
 
@@ -11,6 +13,7 @@ import java.util.*;
 
 @Service
 public class AccountServiceImpl implements AccountService {
+    DweetService dweetService;
 
     AccountRepository accountRepository;
 
@@ -18,10 +21,11 @@ public class AccountServiceImpl implements AccountService {
 
     BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    public AccountServiceImpl(AccountRepository accountRepository, PollRepository pollRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
+    public AccountServiceImpl(AccountRepository accountRepository, PollRepository pollRepository, BCryptPasswordEncoder bCryptPasswordEncoder, DweetService dweetService) {
         this.accountRepository = accountRepository;
         this.pollRepository = pollRepository;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+        this.dweetService = dweetService;
     }
 
     @Override
@@ -69,6 +73,8 @@ public class AccountServiceImpl implements AccountService {
         poll.setAccount(acc);
 
         pollRepository.saveAndFlush(poll);
+
+        dweetService.send(poll, !poll.isClosed());
 
         return poll;
     }
