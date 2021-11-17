@@ -1,5 +1,6 @@
 package no.hvl.dat250.feedApp.service.Impl;
 
+import no.hvl.dat250.feedApp.dweet.*;
 import no.hvl.dat250.feedApp.entity.*;
 import no.hvl.dat250.feedApp.reposetory.*;
 import no.hvl.dat250.feedApp.service.*;
@@ -26,6 +27,8 @@ class AccountServiceImplTest {
     private PollRepository pollRepository;
     @Mock
     private BCryptPasswordEncoder bCryptPasswordEncoder;
+    @Mock
+    private DweetService dweetService;
 
     private AccountService accountService;
 
@@ -40,7 +43,7 @@ class AccountServiceImplTest {
 
     @BeforeEach
     public void setUp() {
-        this.accountService = new AccountServiceImpl(accountRepository, pollRepository, bCryptPasswordEncoder);
+        this.accountService = new AccountServiceImpl(accountRepository, pollRepository, bCryptPasswordEncoder, dweetService);
 
     }
 

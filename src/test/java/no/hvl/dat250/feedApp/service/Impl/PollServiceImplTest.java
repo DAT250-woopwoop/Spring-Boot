@@ -1,6 +1,7 @@
 package no.hvl.dat250.feedApp.service.Impl;
 
 import no.hvl.dat250.feedApp.entity.*;
+import no.hvl.dat250.feedApp.exceptions.*;
 import no.hvl.dat250.feedApp.reposetory.*;
 import no.hvl.dat250.feedApp.service.*;
 import org.junit.jupiter.api.*;
@@ -80,10 +81,11 @@ class PollServiceImplTest {
     @Test
     void findWithNoElementInRepository() {
         Mockito.when(pollRepository.findById(any(Long.class))).thenReturn(Optional.empty());
+        assertThatThrownBy(() -> {
+            Poll found = pollService.find(1L);
+        }).isInstanceOf(NoPollFoundException.class).hasMessage("No poll with given id");
 
-        Poll found = pollService.find(1L);
 
-        assertThat(found).isNull();
     }
 
     @Test
@@ -91,9 +93,9 @@ class PollServiceImplTest {
         Mockito.when(pollRepository.findById(any(Long.class))).thenReturn(Optional.empty());
 
         PollVote pollVote = new PollVote(1L, testPoll, null);
-        Poll poll = pollService.voted(pollVote, 1L, 1L);
-
-        assertThat(poll).isNull();
+        assertThatThrownBy(() -> {
+            Poll poll = pollService.voted(pollVote, 1L, 1L);
+        }).isInstanceOf(NoAccountFoundException.class).hasMessage("No account with given id");
     }
 
 }
