@@ -23,7 +23,7 @@ public class LoadDatabase {
     private final Account account = new Account("OlaNordmann", "Password", "ola@mail.com", "Ola", "Nordmann", poll);
 
     @Bean
-    CommandLineRunner initDatabase(AccountRepository accountRepository, PollRepository pollRepository) {
+    CommandLineRunner initDatabase(RepositoryAccount accountRepository, RepositoryPoll pollRepository) {
         return args -> {
             log.info("Preloading " + accountRepository.save(account));
             //log.info("Preloading " + pollRepository.save(poll));

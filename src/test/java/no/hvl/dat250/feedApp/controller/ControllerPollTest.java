@@ -18,7 +18,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(AccountController.class)
-class PollControllerTest {
+class ControllerPollTest {
 
     @Autowired
     private MockMvc mvc;
