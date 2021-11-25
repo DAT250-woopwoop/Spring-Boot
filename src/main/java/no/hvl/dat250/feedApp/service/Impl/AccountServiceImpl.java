@@ -3,6 +3,8 @@ package no.hvl.dat250.feedApp.service.Impl;
 import no.hvl.dat250.feedApp.dweet.*;
 import no.hvl.dat250.feedApp.entity.*;
 import no.hvl.dat250.feedApp.exceptions.*;
+import no.hvl.dat250.feedApp.mongoDB.repository.MongoAccountRepository;
+import no.hvl.dat250.feedApp.mongoDB.repository.MongoPollRepository;
 import no.hvl.dat250.feedApp.reposetory.*;
 import no.hvl.dat250.feedApp.service.*;
 import org.springframework.beans.factory.annotation.*;
@@ -15,15 +17,21 @@ import java.util.*;
 public class AccountServiceImpl implements AccountService {
     DweetService dweetService;
 
-    AccountRepository accountRepository;
+    private final AccountRepository accountRepository;
+    private final MongoAccountRepository mongoAccountRepository;
 
-    PollRepository pollRepository;
+    private final PollRepository pollRepository;
+    private final MongoPollRepository mongoPollRepository;
 
     BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    public AccountServiceImpl(AccountRepository accountRepository, PollRepository pollRepository, BCryptPasswordEncoder bCryptPasswordEncoder, DweetService dweetService) {
+    public AccountServiceImpl(AccountRepository accountRepository, PollRepository pollRepository,
+                              BCryptPasswordEncoder bCryptPasswordEncoder, DweetService dweetService,
+                              MongoAccountRepository mongoAccountRepository, MongoPollRepository mongoPollRepository) {
         this.accountRepository = accountRepository;
+        this.mongoAccountRepository = mongoAccountRepository;
         this.pollRepository = pollRepository;
+        this.mongoPollRepository = mongoPollRepository;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
         this.dweetService = dweetService;
     }
@@ -31,7 +39,12 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public Account makeNewAccount(Account account) {
         account.setPassword(bCryptPasswordEncoder.encode(account.getPassword()));
-        return accountRepository.save(account);
+        Account savedAccount = accountRepository.save(account);
+        no.hvl.dat250.feedApp.mongoDB.collections.Account mongoAccount = new no.hvl.dat250.feedApp.mongoDB.collections.Account();
+        mongoAccount.setId(savedAccount.getId());
+        mongoAccount.update(savedAccount);
+        mongoAccountRepository.save(mongoAccount);
+        return savedAccount;
     }
 
     @Override
@@ -49,34 +62,62 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public Account updateAccount(Account account, Long id) {
         Optional<Account> optionalAccount = Optional.of(accountRepository.findById(id)).get();
+        Optional<no.hvl.dat250.feedApp.mongoDB.collections.Account> optionalMongoAccount = mongoAccountRepository.findById(id);
         if (optionalAccount.isEmpty()) throw new NoAccountFoundException("No account with given id");
         Account storedAcc = optionalAccount.get();
-
         storedAcc.update(account);
-        return accountRepository.save(storedAcc);
+        Account updatedAccount = accountRepository.save(storedAcc);
+
+        no.hvl.dat250.feedApp.mongoDB.collections.Account updatedMongoAccount;
+        if (optionalMongoAccount.isPresent()){
+            updatedMongoAccount = optionalMongoAccount.get();
+        } else {
+            updatedMongoAccount = new no.hvl.dat250.feedApp.mongoDB.collections.Account();
+            updatedMongoAccount.setId(updatedAccount.getId());
+        }
+        updatedMongoAccount.update(updatedAccount);
+        mongoAccountRepository.save(updatedMongoAccount);
+
+        return updatedAccount;
+
 
     }
 
     @Override
     public void deleteAccount(Long id) {
-        accountRepository.deleteById(id);
+        Optional<Account> optionalAccount = accountRepository.findById(id);
+        Optional<no.hvl.dat250.feedApp.mongoDB.collections.Account> optionalMongoAccount = mongoAccountRepository.findById(id);
+        if (optionalMongoAccount.isPresent()) {
+            mongoAccountRepository.deleteById(id);
+        }
+        if (optionalAccount.isPresent()){
+            accountRepository.deleteById(id);
+        }
     }
 
     @Override
     public Poll makeNewPoll(Poll poll, Long userId) {
-        Optional<Account> account = accountRepository.findById(userId);
+        Optional<Account> optionalAccount = accountRepository.findById(userId);
+        Optional<no.hvl.dat250.feedApp.mongoDB.collections.Account> optionalMongoAccount = mongoAccountRepository.findById(userId);
 
-        if (account.isEmpty()) throw new NoAccountFoundException("No account with given id");
+        if (optionalAccount.isEmpty() || optionalMongoAccount.isEmpty()) throw new NoAccountFoundException("No account with given id");
 
-        Account acc = account.get();
+        Account account = optionalAccount.get();
+        no.hvl.dat250.feedApp.mongoDB.collections.Account mongoAccount = optionalMongoAccount.get();
 
-        poll.setAccount(acc);
+        poll.setAccount(account);
 
-        pollRepository.saveAndFlush(poll);
+        Poll newPoll = pollRepository.saveAndFlush(poll);
 
         dweetService.send(poll, !poll.isClosed());
 
-        return poll;
+        no.hvl.dat250.feedApp.mongoDB.collections.Poll mongoPoll = new no.hvl.dat250.feedApp.mongoDB.collections.Poll();
+        mongoPoll.setId(newPoll.getId());
+        mongoPoll.update(newPoll);
+        mongoPollRepository.save(mongoPoll);
+
+
+        return newPoll;
     }
 
     @Override

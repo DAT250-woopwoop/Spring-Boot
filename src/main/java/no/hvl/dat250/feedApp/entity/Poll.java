@@ -27,7 +27,7 @@ public class Poll extends Updatable {
     private boolean closed;
 
     @OneToMany(mappedBy = "poll")
-    private List<PollVote> votes;
+    private List<PollVote> votes = new ArrayList<>();
 
     @ManyToOne
     private Account account;
@@ -42,7 +42,6 @@ public class Poll extends Updatable {
         this.endTime = endTime;
         this.privatePoll = privatePoll;
         this.closed = closed;
-        this.votes = new ArrayList<>();
 
     }
 

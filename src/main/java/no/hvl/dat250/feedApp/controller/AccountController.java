@@ -49,43 +49,24 @@ public class AccountController {
 
     @PostMapping("/users/signup")
     public AccountDTO newAccount(@RequestBody Account account) {
-        Account temp = accountService.makeNewAccount(account);
-        no.hvl.dat250.feedApp.mongoDB.collections.Account acc = new no.hvl.dat250.feedApp.mongoDB.collections.Account();
-        acc.setId(temp.getId());
-        acc.update(account);
-        mongoAccountRepository.save(acc);
-        return mapper.toDTO(temp);
-
+        return mapper.toDTO(accountService.makeNewAccount(account));
     }
 
     @PutMapping("users/{id}")
     public AccountDTO updateAccount(@RequestBody Account newAccount, @PathVariable Long id) {
-        Optional<no.hvl.dat250.feedApp.mongoDB.collections.Account> acc = mongoAccountRepository.findById(id);
-        no.hvl.dat250.feedApp.mongoDB.collections.Account newAcc;
-        if (acc.isPresent()){
-            newAcc = acc.get();
-            newAcc.update(newAccount);
-        } else {
-            newAcc = new no.hvl.dat250.feedApp.mongoDB.collections.Account();
-            newAcc.update(newAccount);
-        }
-        mongoAccountRepository.save(newAcc);
         return mapper.toDTO(accountService.updateAccount(newAccount, id));
     }
 
     @DeleteMapping("/users/{id}")
     public void deleteAccount(@PathVariable Long id) {
-        /*Optional<no.hvl.dat250.feedApp.mongoDB.collections.Account> acc = mongoAccountRepository.findById(id);
-        if (acc.isPresent()){
-            mongoAccountRepository.delete(acc.get());
-        }*/
         accountService.deleteAccount(id);
     }
 
     @PostMapping("/users/{userId}/newPoll")
     public PollDTO makeNewPoll(@PathVariable Long userId, @RequestBody PollCreationDTO pollCreationDTO) {
         Poll poll = mapper.toDTO(pollCreationDTO);
-        Poll temp = accountService.makeNewPoll(poll, userId);
+
+        /*Poll temp = accountService.makeNewPoll(poll, userId);
 
         no.hvl.dat250.feedApp.mongoDB.collections.Poll mongoPoll = new no.hvl.dat250.feedApp.mongoDB.collections.Poll();
         Optional<no.hvl.dat250.feedApp.mongoDB.collections.Account> mongoAcc = mongoAccountRepository.findById(userId);
@@ -100,9 +81,8 @@ public class AccountController {
             System.out.println("___________________________________________");
             System.out.println("userId: " + userId);
 
-        }
+        }*/
 
-
-        return mapper.toDTO(temp);
+        return mapper.toDTO(accountService.makeNewPoll(poll, userId));
     }
 }

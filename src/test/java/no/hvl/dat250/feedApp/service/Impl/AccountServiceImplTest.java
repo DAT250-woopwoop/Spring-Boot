@@ -2,6 +2,8 @@ package no.hvl.dat250.feedApp.service.Impl;
 
 import no.hvl.dat250.feedApp.dweet.*;
 import no.hvl.dat250.feedApp.entity.*;
+import no.hvl.dat250.feedApp.mongoDB.repository.MongoAccountRepository;
+import no.hvl.dat250.feedApp.mongoDB.repository.MongoPollRepository;
 import no.hvl.dat250.feedApp.reposetory.*;
 import no.hvl.dat250.feedApp.service.*;
 import org.junit.jupiter.api.*;
@@ -24,7 +26,11 @@ class AccountServiceImplTest {
     @Mock
     private AccountRepository accountRepository;
     @Mock
+    private MongoAccountRepository mongoAccountRepository;
+    @Mock
     private PollRepository pollRepository;
+    @Mock
+    private MongoPollRepository mongoPollRepository;
     @Mock
     private BCryptPasswordEncoder bCryptPasswordEncoder;
     @Mock
@@ -43,7 +49,7 @@ class AccountServiceImplTest {
 
     @BeforeEach
     public void setUp() {
-        this.accountService = new AccountServiceImpl(accountRepository, pollRepository, bCryptPasswordEncoder, dweetService);
+        this.accountService = new AccountServiceImpl(accountRepository, pollRepository, bCryptPasswordEncoder, dweetService, mongoAccountRepository, mongoPollRepository);
 
     }
 

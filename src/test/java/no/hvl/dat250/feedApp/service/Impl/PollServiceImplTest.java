@@ -2,6 +2,9 @@ package no.hvl.dat250.feedApp.service.Impl;
 
 import no.hvl.dat250.feedApp.entity.*;
 import no.hvl.dat250.feedApp.exceptions.*;
+import no.hvl.dat250.feedApp.mongoDB.repository.MongoAccountRepository;
+import no.hvl.dat250.feedApp.mongoDB.repository.MongoPollRepository;
+import no.hvl.dat250.feedApp.mongoDB.repository.MongoPollVoteRepository;
 import no.hvl.dat250.feedApp.reposetory.*;
 import no.hvl.dat250.feedApp.service.*;
 import org.junit.jupiter.api.*;
@@ -23,12 +26,18 @@ class PollServiceImplTest {
 
     @Mock
     private PollRepository pollRepository;
+    @Mock
+    private MongoPollRepository mongoPollRepository;
 
     @Mock
     private AccountRepository accountRepository;
+    @Mock
+    private MongoAccountRepository mongoAccountRepository;
 
     @Mock
     private PollVoteRepository pollVoteRepository;
+    @Mock
+    private MongoPollVoteRepository mongoPollVoteRepository;
 
     private PollService pollService;
 
@@ -42,7 +51,7 @@ class PollServiceImplTest {
 
     @BeforeEach
     void setUp() {
-        this.pollService = new PollServiceImpl(pollRepository, accountRepository,pollVoteRepository);
+        this.pollService = new PollServiceImpl(pollRepository, accountRepository,pollVoteRepository,mongoPollRepository,mongoAccountRepository,mongoPollVoteRepository);
     }
 
     @Test

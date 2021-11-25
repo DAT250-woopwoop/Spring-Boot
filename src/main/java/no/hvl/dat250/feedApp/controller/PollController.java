@@ -44,7 +44,7 @@ public class PollController {
 
     @PutMapping("polls/{id}")
     public PollDTO updatePoll(@RequestBody Poll update, @PathVariable Long id) {
-        Poll poll = pollService.update(id, update);
+        /*Poll poll = ;
         Optional<no.hvl.dat250.feedApp.mongoDB.collections.Poll> mongoPoll = mongoPollRepository.findById(id);
         no.hvl.dat250.feedApp.mongoDB.collections.Poll newPoll;
         if (mongoPoll.isPresent()){
@@ -55,8 +55,8 @@ public class PollController {
             newPoll.setId(poll.getId());
             newPoll.update(update);
         }
-        mongoPollRepository.save(newPoll);
-        return mapper.toDTO(poll);
+        mongoPollRepository.save(newPoll);*/
+        return mapper.toDTO(pollService.update(id, update));
     }
 
     @DeleteMapping("/polls/{id}")

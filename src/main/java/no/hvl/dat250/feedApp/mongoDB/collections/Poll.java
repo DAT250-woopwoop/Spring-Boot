@@ -27,11 +27,13 @@ public class Poll extends Updatable {
     private boolean privatePoll;
     private boolean closed;
 
-    private List<PollVote> votes;
+    private List<PollVote> votes = new ArrayList<>();
 
     private Account account;
 
-    public Poll(){}
+    public Poll(){
+
+    }
 
     public Poll(String pollDesc, String pollName, Date startTime, Date endTime,
                 Boolean privatePoll, Boolean closed) {
@@ -41,7 +43,6 @@ public class Poll extends Updatable {
         this.endTime = endTime;
         this.privatePoll = privatePoll;
         this.closed = closed;
-        this.votes = new ArrayList<>();
 
     }
 
