@@ -12,7 +12,7 @@ import static org.assertj.core.api.Assertions.*;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
-public class RepositoryAccountIntegrationTest {
+public class MongoAccountRepositoryIntegrationTest {
 
     @Autowired
     private TestEntityManager entityManager;
