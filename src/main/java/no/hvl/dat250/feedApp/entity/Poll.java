@@ -4,8 +4,9 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.sql.*;
-import java.util.*;
+import java.sql.Timestamp;
+import java.util.List;
+import java.util.ArrayList;
 import java.util.function.*;
 
 @Entity

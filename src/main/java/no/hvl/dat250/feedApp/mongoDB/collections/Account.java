@@ -19,7 +19,6 @@ import javax.persistence.GenerationType;
 @Document(collection = "Account")
 public class Account extends Updatable {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String username;
     private String password;
@@ -56,6 +55,15 @@ public class Account extends Updatable {
     }
 
     public void update(Account updatedAccount) {
+        setIfNotNull(this::setUsername, updatedAccount.getUsername());
+        setIfNotNull(this::setPassword, updatedAccount.getPassword());
+        setIfNotNull(this::setE_mail, updatedAccount.getE_mail());
+        setIfNotNull(this::setF_name, updatedAccount.getF_name());
+        setIfNotNull(this::setL_name, updatedAccount.getL_name());
+    }
+
+    public void update(no.hvl.dat250.feedApp.entity.Account updatedAccount) {
+        setIfNotNull(this::setId, updatedAccount.getId());
         setIfNotNull(this::setUsername, updatedAccount.getUsername());
         setIfNotNull(this::setPassword, updatedAccount.getPassword());
         setIfNotNull(this::setE_mail, updatedAccount.getE_mail());

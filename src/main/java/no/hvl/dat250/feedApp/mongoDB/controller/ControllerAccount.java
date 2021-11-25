@@ -5,7 +5,7 @@ package no.hvl.dat250.feedApp.mongoDB.controller;
 //import no.hvl.dat250.feedApp.entity.Account;
 import no.hvl.dat250.feedApp.mongoDB.collections.Account;
 import no.hvl.dat250.feedApp.mongoDB.repository.RepositoryAccount;
-        import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -27,7 +27,7 @@ public class ControllerAccount {
     }
 
     @GetMapping("/mongodb/users/{id}")
-    public no.hvl.dat250.feedApp.mongoDB.collections.Account findAccountById(@PathVariable Long id) {
+    public Account findAccountById(@PathVariable Long id) {
         Optional<Account> acc = repositoryAccount.findById(id);
         if (acc.isPresent()) {
             return acc.get();

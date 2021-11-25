@@ -17,7 +17,6 @@ import javax.persistence.GenerationType;
 @Document(collection = "PollVote")
 public class PollVote extends Updatable {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private Answer answer;
