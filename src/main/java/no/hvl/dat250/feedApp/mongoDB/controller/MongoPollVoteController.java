@@ -13,12 +13,12 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-public class ControllerPollVote {
+public class MongoPollVoteController {
 
     private final MongoPollVoteRepository mongoPollVoteRepository;
     private final Mapper mapper = new Mapper();
 
-    public ControllerPollVote(MongoPollVoteRepository pollVoteService) {
+    public MongoPollVoteController(MongoPollVoteRepository pollVoteService) {
         this.mongoPollVoteRepository = pollVoteService;
     }
 

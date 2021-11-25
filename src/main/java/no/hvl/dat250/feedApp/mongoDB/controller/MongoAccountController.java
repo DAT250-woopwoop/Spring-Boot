@@ -11,13 +11,13 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-public class ControllerAccount {
+public class MongoAccountController {
 
     private final MongoAccountRepository mongoAccountRepository;
 
     // private final Mapper mapper = new Mapper(); // TODO: 25/10/2021 Should be a bean(?)
 
-    ControllerAccount(MongoAccountRepository accountService){
+    MongoAccountController(MongoAccountRepository accountService){
         this.mongoAccountRepository = accountService;
     }
 

@@ -16,13 +16,13 @@ import java.util.Optional;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
-public class ControllerPoll {
+public class MongoPollController {
     private final MongoPollRepository mongoPollRepository;
     private final MongoOperations mongoOperations;
 
     //private final Mapper mapper = new Mapper(); // TODO: 25/10/2021 Should be bean(?)
 
-    public ControllerPoll(MongoPollRepository pollService, MongoOperations mongoOperations) {
+    public MongoPollController(MongoPollRepository pollService, MongoOperations mongoOperations) {
         this.mongoPollRepository = pollService;
         this.mongoOperations = mongoOperations;
     }
